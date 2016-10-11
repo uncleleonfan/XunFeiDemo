@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
@@ -13,7 +14,11 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    private Gson mGson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         // 将“12345678”替换成您申请的 APPID，申请地址： http://www.xfyun.cn
 // 请勿在“ =”与 appid 之间添加任务空字符或者转义符
         SpeechUtility.createUtility(MainActivity.this, SpeechConstant.APPID +"=56f22e12");
+        mGson = new Gson();
     }
 
     public void onRecongnise(View view) {
@@ -41,9 +47,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private RecognizerDialogListener mRecognizerDialogListener =  new RecognizerDialogListener() {
+
+        /**
+         *
+         * @param recognizerResult 语音识别结果
+         * @param b true表示是标点符号
+         */
         @Override
         public void onResult(RecognizerResult recognizerResult, boolean b) {
-            Toast.makeText(MainActivity.this, recognizerResult.getResultString(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(MainActivity.this, recognizerResult.getResultString(), Toast.LENGTH_LONG).show();
+            if (b) {
+                return;
+            }
+            ResultBean resultBean = mGson.fromJson(recognizerResult.getResultString(), ResultBean.class);
+            List<ResultBean.WsBean> ws = resultBean.getWs();
+            String w = "";
+            for (int i = 0; i < ws.size(); i++) {
+                List<ResultBean.WsBean.CwBean> cw = ws.get(i).getCw();
+                for (int j = 0; j < cw.size(); j++) {
+                    w += cw.get(j).getW();
+                }
+            }
+
+            Toast.makeText(MainActivity.this, w, Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
