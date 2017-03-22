@@ -18,6 +18,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String mNewsText = "在黑客攻防技术中，单独实现虚拟机逃逸已经很难，此前只有360安全战队和韩国神童Lokihardt在PwnFest大赛上破解成功过。攻破Edge和Win10再完成VMware虚拟机逃逸，整个破解环境的复杂度倍增，难度更远远超过攻破单独的VMware虚拟机。";
+
     private Gson mGson;
 
     @Override
@@ -93,6 +95,6 @@ public class MainActivity extends AppCompatActivity {
 //仅支持保存为 pcm 和 wav 格式， 如果不需要保存合成音频，注释该行代码
         mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
 //3.开始合成
-        mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", null);
+        mTts.startSpeaking(mNewsText, null);
     }
 }
