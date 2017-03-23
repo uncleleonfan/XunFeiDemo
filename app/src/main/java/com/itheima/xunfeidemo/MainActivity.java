@@ -18,6 +18,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    //新闻文本
     private static final String mNewsText = "在黑客攻防技术中，单独实现虚拟机逃逸已经很难，此前只有360安全战队和韩国神童Lokihardt在PwnFest大赛上破解成功过。攻破Edge和Win10再完成VMware虚拟机逃逸，整个破解环境的复杂度倍增，难度更远远超过攻破单独的VMware虚拟机。";
 
     private Gson mGson;
@@ -27,24 +28,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // 将“12345678”替换成您申请的 APPID，申请地址： http://www.xfyun.cn
-// 请勿在“ =”与 appid 之间添加任务空字符或者转义符
+        // 请勿在“ =”与 appid 之间添加任务空字符或者转义符
         SpeechUtility.createUtility(MainActivity.this, SpeechConstant.APPID +"=56f22e12");
         mGson = new Gson();
     }
 
-    public void onRecongnise(View view) {
+    public void onRecognise(View view) {
         //1.创建RecognizerDialog对象
         RecognizerDialog mDialog = new RecognizerDialog(this, null);
-//2.设置accent、 language等参数
+        //2.设置accent、 language等参数
         mDialog.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
         mDialog.setParameter(SpeechConstant.ACCENT, "mandarin");
-//若要将UI控件用于语义理解，必须添加以下参数设置，设置之后onResult回调返回将是语义理解
-//结果
-// mDialog.setParameter("asr_sch", "1");
-// mDialog.setParameter("nlp_version", "2.0");
-//3.设置回调接口
+        //若要将UI控件用于语义理解，必须添加以下参数设置，设置之后onResult回调返回将是语义理解
+        //结果
+        // mDialog.setParameter("asr_sch", "1");
+        // mDialog.setParameter("nlp_version", "2.0");
+        //3.设置回调接口
         mDialog.setListener(mRecognizerDialogListener);
-//4.显示dialog，接收语音输入
+        //4.显示dialog，接收语音输入
         mDialog.show();
     }
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void onResult(RecognizerResult recognizerResult, boolean b) {
-//            Toast.makeText(MainActivity.this, recognizerResult.getResultString(), Toast.LENGTH_LONG).show();
+            // Toast.makeText(MainActivity.this, recognizerResult.getResultString(), Toast.LENGTH_LONG).show();
             if (b) {
                 return;
             }
@@ -70,9 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     w += cw.get(j).getW();
                 }
             }
-
             Toast.makeText(MainActivity.this, w, Toast.LENGTH_SHORT).show();
-
         }
 
         @Override
@@ -84,17 +83,17 @@ public class MainActivity extends AppCompatActivity {
     public void onSynthesize(View view) {
         //1.创建 SpeechSynthesizer 对象, 第二个参数： 本地合成时传 InitListener
         SpeechSynthesizer mTts= SpeechSynthesizer.createSynthesizer(MainActivity.this, null);
-//2.合成参数设置，详见《 MSC Reference Manual》 SpeechSynthesizer 类
-//设置发音人（更多在线发音人，用户可参见 附录13.2
+        //2.合成参数设置，详见《 MSC Reference Manual》 SpeechSynthesizer 类
+        //设置发音人（更多在线发音人，用户可参见 附录13.2
         mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan"); //设置发音人
         mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
         mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围 0~100
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
-//设置合成音频保存位置（可自定义保存位置），保存在“./sdcard/iflytek.pcm”
-//保存在 SD 卡需要在 AndroidManifest.xml 添加写 SD 卡权限
-//仅支持保存为 pcm 和 wav 格式， 如果不需要保存合成音频，注释该行代码
+        //设置合成音频保存位置（可自定义保存位置），保存在“./sdcard/iflytek.pcm”
+        //保存在 SD 卡需要在 AndroidManifest.xml 添加写 SD 卡权限
+        //仅支持保存为 pcm 和 wav 格式， 如果不需要保存合成音频，注释该行代码
         mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, "./sdcard/iflytek.pcm");
-//3.开始合成
+        //3.开始合成
         mTts.startSpeaking(mNewsText, null);
     }
 }
