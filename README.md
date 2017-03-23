@@ -64,6 +64,11 @@
     };
 
 ## 5.语音合成 ##
+
+    //新闻文本
+    private static final String mNewsText = "剩给韩国队的时间不多了";
+
+
     public void onSynthesize(View view) {
         //1.创建 SpeechSynthesizer 对象, 第二个参数： 本地合成时传 InitListener
         SpeechSynthesizer mTts= SpeechSynthesizer.createSynthesizer(MainActivity.this, null);

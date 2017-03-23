@@ -19,7 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     //新闻文本
-    private static final String mNewsText = "在黑客攻防技术中，单独实现虚拟机逃逸已经很难，此前只有360安全战队和韩国神童Lokihardt在PwnFest大赛上破解成功过。攻破Edge和Win10再完成VMware虚拟机逃逸，整个破解环境的复杂度倍增，难度更远远超过攻破单独的VMware虚拟机。";
+    private static final String mNewsText = "剩给韩国队的时间不多了";
 
     private Gson mGson;
 
